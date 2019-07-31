@@ -21,9 +21,7 @@ describe("routes : topics", () => {
                     console.log(err);
                     done();
                 });
-
         });
-
     });
 
     describe("GET /topics", () => {
@@ -39,6 +37,4 @@ describe("routes : topics", () => {
             });
         });
     });
-
-
 });
