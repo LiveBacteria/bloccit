@@ -72,6 +72,66 @@ describe("routes : advertisements", () => {
             );
         });
     });
+
+    describe("GET /advertisements/:id", () => {
+       it("should render a view with the selected advertisement", (done) => {
+          request.get(`${base}${this.advert.id}`, (err, res, body) => {
+              expect(err).toBeNull();
+              expect(body).toContain("Game Ad");
+              done();
+          });
+       });
+    });
+
+    describe("POST /advertisements/:id/destroy", () => {
+        it("should delete the advertisement with the associated ID", (done) => {
+            Advertisement.all().then((advertisements) => {
+                const advertisementsCountBeforeDelete = advertisements.length;
+                expect(advertisementsCountBeforeDelete).toBe(1);
+
+                request.post(`${base}${this.advert.id}/destroy`, (err, res, body) => {
+                    Advertisement.all().then((advertisements) => {
+                        expect(err).toBeNull();
+                        expect(advertisements.length).toBe(advertisementsCountBeforeDelete - 1);
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
+    describe("GET /advertisements/:id/edit" , () => {
+        it("should render a view with an edit advertisement", (done) => {
+            request.get(`${base}${this.advert.id}/edit`, (err, res, body) => {
+                expect(err).toBeNull();
+                expect(body).toContain("Edit Advertisement");
+                expect(body).toContain("Game Ad");
+                done();
+            });
+        });
+    });
+
+    describe("POST /advertisements/:id/update", () => {
+        it("should update the advertisement with the given values", (done) => {
+            const options = {
+                url: `${base}${this.advert.id}/update`,
+                form: {
+                    title: "Game Ad",
+                    description: "Yeah, there is a lot."
+                }
+            };
+            request.post(options,
+                (err, res, body) => {
+                    expect(err).toBeNull();
+                    Advertisement.findOne({
+                        where: { id: this.advert.id }
+                    }).then((advertisement) => {
+                        expect(advertisement.title).toBe("Game Ad");
+                        done();
+                    });
+                });
+        });
+    });
 });
 
 //2:27:38 triforce live 100
