@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      body: {
+      color: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: false, 
         type: Sequelize.DATE
       }
     });
