@@ -68,7 +68,7 @@ describe("Post", () => {
                   expect(post.topicId).toBe(newTopic.id);
                   done();
               })
-          })
+          });
       });
    });
 
