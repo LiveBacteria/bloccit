@@ -51,7 +51,7 @@ describe("routes : posts", () => {
                     title: "Watching sand melt",
                     body: "Without a doubt my favorite things to do besides watching paint dry!"
                 }
-            };
+            }
             request.post(options, (err, res, body) => {
                 Post.findOne({where: {title: "Watching sand melt"}}).then((post) => {
                     expect(post).not.toBeNull();
@@ -64,6 +64,26 @@ describe("routes : posts", () => {
                     done();
                 });
             });
+        });
+        it("should not create a new post that fails validations", (done) => {
+            const options = {
+                url: `${base}/${this.topic.id}/posts/create`,
+                form: {
+                    title: "a",
+                    body: "b"
+                }
+            };
+            request.post(options,
+                (err, res, body) => {
+                    Post.findOne({where: {title: "a"}}).then((post) => {
+                            expect(post).toBeNull();
+                            done();
+                        }).catch((err) => {
+                            console.log(err);
+                            done();
+                        });
+                }
+            );
         });
     });
 
@@ -112,15 +132,11 @@ describe("routes : posts", () => {
                     title: "Sandball Building Competition"
                 }
             };
-            request.post(options,
-                (err, res, body) => {
-
+            request.post(options, (err, res, body) => {
                     expect(err).toBeNull();
-
                     Post.findOne({
                         where: {id: this.post.id}
-                    })
-                        .then((post) => {
+                    }).then((post) => {
                             expect(post.title).toBe("Sandball Building Competition");
                             done();
                         });
