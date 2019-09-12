@@ -129,7 +129,8 @@ describe("routes : posts", () => {
             const options = {
                 url: `${base}/${this.topic.id}/posts/${this.post.id}/update`,
                 form: {
-                    title: "Sandball Building Competition"
+                    title: "Sandball Building Competition",
+                    body: "Sandball building is very difficult."
                 }
             };
             request.post(options, (err, res, body) => {
