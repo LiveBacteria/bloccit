@@ -60,9 +60,10 @@ describe("routes : topics", () => {
         it("should create a new topic and redirect", (done) => {
            request.post(options, (err,res,body) => {
                Topic.findOne({where: {title: "blink-182 songs"}}).then((topic) => {
+                   expect(topic).not.toBeNull();
                    expect(res.statusCode).toBe(303);
                    expect(topic.title).toBe("blink-182 songs");
-                   expect(topic.description).toBe("What's your favorite blink-182 song?")
+                   expect(topic.description).toBe("What's your favorite blink-182 song?");
                    done();
                }).catch(err => {
                    console.log(err);
